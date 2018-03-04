@@ -25,14 +25,13 @@ def handle(text, mic, profile, iot_client=None,chatbot=None):
     data = json.loads(r.content.decode('utf8'))
     # print(data)
     if data['result']['stat'] == '1':
-        print(data)
+        # print(data)
         news = []
         news_ding = []
         for item in data['result']['data']:
-            # "来源" + item['author_name'] +
             news.append(item['title'])
             news_ding.append('['+item['title']+']('+item['url']+')    ')
-        plugin_output(text, mic, '。\n'.join(news), True, ' | '.join(news_ding))
+        plugin_output(text, mic, robot_says='。\n'.join(news), force_ding=True, ding_content=' | '.join(news_ding))
     else:
         mic.say('接口出错')
 
