@@ -5,7 +5,7 @@ import requests, sys
 from src.config import load_yaml_settings
 from src.components.homeassistant import Hass
 
-WORDS = ["室内气温", "室内温度","室内湿度","房间湿度", "室内亮度"]
+WORDS = ["室内气温", "室内温度","室内湿度","房间湿度", "室内亮度", "室内光照"]
 PRIORITY = 11
 logger = logging.getLogger()
 
@@ -28,7 +28,7 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
     elif '湿度' in text:
         entity_id = load_yaml_settings()['hass']['entities']['sensor']['humidity']
         mic.say('室内湿度，百分之' + hass.get_entity_states(entity_id=entity_id)['state'])
-    elif '光线' in text or '亮度' in text:
+    elif '光线' in text or '亮度' in text or '光照' in text:
         entity_id = load_yaml_settings()['hass']['entities']['sensor']['illumination']
         illumination = float(hass.get_entity_states(entity_id=entity_id)['state'])
         if illumination < 50:
