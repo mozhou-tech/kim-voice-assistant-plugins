@@ -4,6 +4,9 @@ from src.plugins import is_all_word_segment_in_text
 import requests, sys
 from src.config import load_yaml_settings
 from src.components.homeassistant import Hass
+from random import randint
+from time import sleep
+from threading import Thread
 
 WORDS = ["打开夜灯", "关闭夜灯","夜灯蓝色","夜灯红色", "绿色夜灯", "夜灯状态", "夜灯调亮", "夜灯调暗","庆祝一下"]
 HELP_TEXT = ''
@@ -18,40 +21,40 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
     hass_entity_state = hass.get_entity_states(entity_id=entity_id)
     if '打开' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', brightness=50)
-        mic.say('设置成功')
+        mic.say('操作成功')
     elif '关闭' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_off', brightness=50)
-        mic.say('设置成功')
+        mic.say('操作成功')
     elif '蓝色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(0, 0, 255),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('设置成功')
+        mic.say('操作成功')
     elif '白色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(255, 255, 255),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('设置成功')
+        mic.say('操作成功')
     elif '红色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(255, 0, 0),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('设置成功')
+        mic.say('操作成功')
 
     elif '绿色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(0, 255, 0),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('设置成功')
+        mic.say('操作成功')
 
     elif '调暗' in text:
         new_brightness = hass_entity_state['attributes']['brightness'] - 25
         hass.xiaomi_gateway_light(entity_id=entity_id,
                                   rgb_color=hass_entity_state['attributes']['rgb_color'],
                                   brightness=new_brightness)
-        mic.say('设置成功')
+        mic.say('操作成功')
     elif '调亮' in text:
         new_brightness = hass_entity_state['attributes']['brightness'] + 25
         hass.xiaomi_gateway_light(entity_id=entity_id,
                                   rgb_color=hass_entity_state['attributes']['rgb_color'],
                                   brightness=new_brightness)
-        mic.say('设置成功')
+        mic.say('操作成功')
 
     elif '状态' in text:
         print(hass_entity_state['attributes'])
@@ -61,7 +64,16 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
         else:
             mic.say('夜灯已关闭'+hass_entity_state['attributes'])
     elif '庆祝' in text:
-        pass
+        def celebrate():
+            i = 0
+            while i < 100:
+                hass.xiaomi_gateway_light(entity_id=entity_id,
+                                          rgb_color=(randint(1, 255),randint(1, 255),randint(1, 255),),
+                                          brightness=100)
+                sleep(0.3)
+                i = i + 1
+
+        Thread(target=celebrate, daemon=True).start()
 
 
 
