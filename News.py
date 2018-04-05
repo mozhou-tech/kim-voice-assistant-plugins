@@ -23,9 +23,7 @@ def handle(text, mic, profile, iot_client=None,chatbot=None):
     }
     r = requests.request(method=method, url=url, data=bodys, headers=headers)
     data = json.loads(r.content.decode('utf8'))
-    # print(data)
     if data['result']['stat'] == '1':
-        # print(data)
         news = []
         news_ding = []
         for item in data['result']['data']:
