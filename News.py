@@ -4,7 +4,7 @@ from src.plugins import is_all_word_segment_in_text, plugin_output
 import requests, sys
 from src.config import load_yaml_settings
 
-WORDS = ['新闻', '今日头条']
+WORDS = ['今日头条']
 PRIORITY = 12
 logger = logging.getLogger()
 
