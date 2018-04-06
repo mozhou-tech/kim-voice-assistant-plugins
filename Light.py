@@ -66,7 +66,7 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
     elif '庆祝' in text:
         def celebrate():
             i = 0
-            while i < 100:
+            while i < 30:
                 hass.xiaomi_gateway_light(entity_id=entity_id,
                                           rgb_color=(randint(1, 255),randint(1, 255),randint(1, 255),),
                                           brightness=100)
