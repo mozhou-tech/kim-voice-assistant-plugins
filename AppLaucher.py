@@ -17,6 +17,8 @@ def handle(text, mic, profile, iot_client=None,chatbot=None):
         os.system('open /Volumes/MacintoshHD/AppHub/Wechat.app')
     elif 'word' in text:
         os.system('open /Volumes/MacintoshHD/AppHub/Microsoft\ Word.app')
+    elif '终端' in text:
+        os.system('open /Applications/Utilities/Terminal.app')
 
 def is_valid(text):
     return is_all_word_segment_in_text(WORDS, text)
