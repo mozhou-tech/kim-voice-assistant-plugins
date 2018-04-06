@@ -21,40 +21,40 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
     hass_entity_state = hass.get_entity_states(entity_id=entity_id)
     if '打开' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', brightness=50)
-        mic.say('操作成功')
+        mic.say('ok 啦')
     elif '关闭' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_off', brightness=50)
-        mic.say('操作成功')
+        mic.say('ok 啦')
     elif '蓝色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(0, 0, 255),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('操作成功')
+        mic.say('ok 啦')
     elif '白色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(255, 255, 255),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('操作成功')
+        mic.say('ok 啦')
     elif '红色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(255, 0, 0),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('操作成功')
+        mic.say('ok 啦')
 
     elif '绿色' in text:
         hass.xiaomi_gateway_light(entity_id=entity_id, state='turn_on', rgb_color=(0, 255, 0),
                                   brightness=hass_entity_state['attributes']['brightness'])
-        mic.say('操作成功')
+        mic.say('ok 啦')
 
     elif '调暗' in text:
         new_brightness = hass_entity_state['attributes']['brightness'] - 25
         hass.xiaomi_gateway_light(entity_id=entity_id,
                                   rgb_color=hass_entity_state['attributes']['rgb_color'],
                                   brightness=new_brightness)
-        mic.say('操作成功')
+        mic.say('ok 啦')
     elif '调亮' in text:
         new_brightness = hass_entity_state['attributes']['brightness'] + 25
         hass.xiaomi_gateway_light(entity_id=entity_id,
                                   rgb_color=hass_entity_state['attributes']['rgb_color'],
                                   brightness=new_brightness)
-        mic.say('操作成功')
+        mic.say('ok 啦')
 
     elif '状态' in text:
         print(hass_entity_state['attributes'])
@@ -74,6 +74,7 @@ def handle(text, mic, profile, iot_client=None, chatbot=None):
                 i = i + 1
 
         Thread(target=celebrate, daemon=True).start()
+        mic.say('ok 啦')
 
 
 
